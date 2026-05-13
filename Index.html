@@ -212,26 +212,6 @@
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="banner">
-          <h2>Включить атмосферу</h2>
-          <p>Без автозапуска: можно включить мягкий звук костра и реки. Если браузер не даст запустить звук — просто нажми еще раз.</p>
-          <div class="audio"><button class="sound" id="soundBtn">🔥 Включить костер и реку</button><span id="soundState">звук выключен</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="head"><h2>Отзывы, которые хочется придумать</h2><p>Полуироничные цитаты для настроения. Можно заменить на реальные после первого выезда.</p></div>
-        <div class="grid3">
-          <div class="quote"><p>«Баня посреди леса — это незаконно кайфово»</p><b>— человек после бани</b></div>
-          <div class="quote"><p>«Думал будет тяжело, а оказалось супер чилл»</p><b>— человек с веслом</b></div>
-          <div class="quote"><p>«Ехал на один сплав, теперь хочу каждый год»</p><b>— подозрительно довольный участник</b></div>
-        </div>
-      </div>
-    </section>
 
     <section class="section" id="faq">
       <div class="container">
@@ -274,26 +254,7 @@
 
     let audioCtx, noise, gain, osc, playing = false;
     const btn = document.getElementById('soundBtn'), state = document.getElementById('soundState');
-    function startSound(){
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const bufferSize = 2 * audioCtx.sampleRate;
-      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for(let i=0;i<bufferSize;i++) data[i] = (Math.random()*2-1) * 0.22;
-      noise = audioCtx.createBufferSource(); noise.buffer = buffer; noise.loop = true;
-      const filter = audioCtx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 850;
-      gain = audioCtx.createGain(); gain.gain.value = 0.05;
-      osc = audioCtx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 145;
-      const oscGain = audioCtx.createGain(); oscGain.gain.value = 0.012;
-      noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
-      osc.connect(oscGain); oscGain.connect(audioCtx.destination);
-      noise.start(); osc.start(); playing = true; btn.textContent = '⏸ Выключить атмосферу'; state.textContent = 'звук включен';
-    }
-    function stopSound(){
-      try{ noise.stop(); osc.stop(); audioCtx.close(); }catch(e){}
-      playing = false; btn.textContent = '🔥 Включить костер и реку'; state.textContent = 'звук выключен';
-    }
-    btn.addEventListener('click',()=> playing ? stopSound() : startSound());
+ 
   </script>
 </body>
 </html>
